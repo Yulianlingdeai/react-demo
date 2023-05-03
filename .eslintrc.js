@@ -3,12 +3,7 @@ module.exports = {
     env: {
         node: true
     },
-    extends: [
-        "react-app",
-        "react-app/jest",
-        "plugin:prettier/recommended"
-        // "prettier"
-    ],
+    extends: ["react-app", "react-app/jest", "plugin:prettier/recommended"],
     parserOptions: {
         ecmaVersion: 2020
     },
