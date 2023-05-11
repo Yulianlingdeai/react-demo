@@ -1,11 +1,12 @@
+import React from "react";
+function father() {
+    return <div>father</div>;
+}
 function App() {
-    function abc() {
-        return 1;
-    }
     return (
         <div>
             <span>app</span>
-            {abc()}
+            {father()}
         </div>
     );
 }
