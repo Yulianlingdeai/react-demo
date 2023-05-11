@@ -1,13 +1,28 @@
 module.exports = {
     root: true,
     env: {
-        node: true
+        node: true,
+        browser: true
     },
-    extends: ["react-app", "react-app/jest", "plugin:prettier/recommended"],
+    parser: "@typescript-eslint/parser",
+    extends: [
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        // "prettier/@typescript-eslint",
+        "react-app",
+        "react-app/jest",
+        "plugin:prettier/recommended"
+    ],
+    plugins: ["prettier", "react"],
     parserOptions: {
-        ecmaVersion: 2020
+        sourceType: "module",
+        ecmaVersion: "latest",
+        ecmaFeatures: {
+            jsx: true
+        }
     },
     rules: {
+        "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx", ".ts", "tsx"] }],
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
         // "@typescript-eslint/no-explicit-any": ["off"],
