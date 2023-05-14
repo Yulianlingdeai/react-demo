@@ -7,7 +7,10 @@ type state = {
 function father() {
     return <div>father</div>;
 }
-class Son extends React.Component {
+interface MyProps {
+    name: number;
+}
+class Son extends React.Component<MyProps> {
     age = 18;
     state: Readonly<state> = {
         name: "yxy",
@@ -38,7 +41,7 @@ function App() {
         <div>
             <span>app</span>
             {father()}
-            <Son />
+            <Son name={18} />
         </div>
     );
 }
