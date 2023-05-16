@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ChangeEvent } from "react";
 type state = {
     name: string;
     age: number | string;
 };
-function father() {
-    return <div>father</div>;
+function Father() {
+    const [state, setState] = useState({
+        name: "",
+        age: ""
+    } as {
+        name: string;
+        age: number | string;
+    });
+    return (
+        <div>
+            <div>
+                <span>姓名：{state.name}</span>
+                <span>年龄：{state.age}</span>
+            </div>
+            <button onClick={() => setState({ name: "123", age: 18 })}>按钮</button>
+        </div>
+    );
 }
 class Son extends React.Component {
     age = 18;
@@ -16,7 +31,7 @@ class Son extends React.Component {
     handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
         console.log(e);
         this.setState({
-            age: +e.target.value + 1
+            age: +e.target.value
         });
     };
     render() {
@@ -36,8 +51,9 @@ class Son extends React.Component {
 function App() {
     return (
         <div>
-            <span>app</span>
-            {father()}
+            {Father()}
+            <br />
+            <br />
             <Son />
         </div>
     );
