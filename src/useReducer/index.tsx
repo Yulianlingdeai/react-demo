@@ -1,6 +1,8 @@
 import React from "react";
-import { useReducer } from "react";
-import type { Reducer } from "react";
+// import { useReducer } from "react";
+// import type { Reducer } from "react";
+import { useImmerReducer } from "use-immer";
+import type { ImmerReducer } from "use-immer";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 type taskType = {
@@ -32,8 +34,8 @@ const initialTasks: taskType[] = [
 ];
 
 export default function Container() {
-    const [tasks, dispatch] = useReducer<Reducer<taskType[], actionType>>(tasksReducer, initialTasks);
-
+    // const [tasks, dispatch] = useReducer<Reducer<taskType[], actionType>>(tasksReducer, initialTasks);
+    const [tasks, dispatch] = useImmerReducer<taskType[], actionType>(tasksReducer2, initialTasks);
     function handleAddTask(text: string) {
         dispatch({
             type: "added",
@@ -41,21 +43,18 @@ export default function Container() {
             text: text
         });
     }
-
     function handleChangeTask(task: taskType) {
         dispatch({
             type: "changed",
             task: task
         });
     }
-
     function handleDeleteTask(taskId: number) {
         dispatch({
             type: "deleted",
             id: taskId
         });
     }
-
     return (
         <>
             <div>这是useReducer</div>
@@ -66,32 +65,56 @@ export default function Container() {
     );
 }
 
-const tasksReducer: Reducer<taskType[], actionType> = (tasks, action) => {
+const tasksReducer2: ImmerReducer<taskType[], actionType> = (draft, action) => {
     switch (action.type) {
         case "added": {
-            return [
-                ...tasks,
-                {
-                    id: action.id,
-                    text: action.text,
-                    done: false
-                }
-            ];
+            draft.push({
+                id: action.id,
+                text: action.text,
+                done: false
+            });
+            break;
         }
         case "changed": {
-            return tasks.map((t) => {
-                if (t.id === action.task.id) {
-                    return action.task;
-                } else {
-                    return t;
-                }
-            });
+            const index = draft.findIndex((t) => t.id === action.task.id);
+            draft[index] = action.task;
+            break;
         }
         case "deleted": {
-            return tasks.filter((t) => t.id !== action.id);
+            return draft.filter((t) => t.id !== action.id);
         }
         // default: {
         //     throw Error("未知 action：" + action.type);
         // }
     }
 };
+
+// const tasksReducer: Reducer<taskType[], actionType> = (tasks, action) => {
+//     switch (action.type) {
+//         case "added": {
+//             return [
+//                 ...tasks,
+//                 {
+//                     id: action.id,
+//                     text: action.text,
+//                     done: false
+//                 }
+//             ];
+//         }
+//         case "changed": {
+//             return tasks.map((t) => {
+//                 if (t.id === action.task.id) {
+//                     return action.task;
+//                 } else {
+//                     return t;
+//                 }
+//             });
+//         }
+//         case "deleted": {
+//             return tasks.filter((t) => t.id !== action.id);
+//         }
+//         // default: {
+//         //     throw Error("未知 action：" + action.type);
+//         // }
+//     }
+// };
