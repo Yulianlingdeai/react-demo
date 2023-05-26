@@ -4,7 +4,8 @@ import React from "react";
 // import ReducerTask from "./useReducer";
 // import Page from "./useContext";
 // import Form from "./useRef";
-import Counter from "./useEffect";
+// import Counter from "./useEffect";
+import Callback from "./useCallback";
 
 /**这是根组件 */
 function App() {
@@ -16,7 +17,8 @@ function App() {
             {/* <ReducerTask></ReducerTask> */}
             {/* <Page></Page> */}
             {/* <Form></Form> */}
-            <Counter></Counter>
+            {/* <Counter></Counter> */}
+            <Callback></Callback>
         </div>
     );
 }
